@@ -4,7 +4,7 @@ class SurveyFileStorage
 {
     private const FOLDER_DATA = './data/';
 
-    public function loadSurveyFromFile(string $email): ?Survey
+    public function loadSurveyFromFile(string $email): Survey
     {
         $fileName = self::FOLDER_DATA . $email . '.txt';
         if ($email !== "" and file_exists($fileName))
@@ -13,7 +13,7 @@ class SurveyFileStorage
             $arrayData = [];
             foreach ($tempArray as $line)
             {
-                $tempString = explode(': ', $line, 2);
+                $tempString = explode(': ', $line);
                 $arrayData[$tempString[0]] = isset($tempString[1]) ? $tempString[1] : null;
             }
             return new Survey($arrayData["Email"], $arrayData["First Name"], $arrayData["Last Name"], $arrayData["Age"]);
@@ -51,6 +51,7 @@ class SurveyFileStorage
         }
         else
         {
+            mkdir(self::FOLDER_DATA);
             $surveyTxt = fopen($fileName, "w");
             fwrite($surveyTxt, "Email: " . $survey->getEmail() . "\n");
             fwrite($surveyTxt, "First Name: " . $survey->getFirstName() . "\n");
