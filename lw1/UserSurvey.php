@@ -5,17 +5,15 @@
 require_once('./src/common.inc.php'); 
 
 $requestSurveyLoader = new RequestSurveyLoader();
-$surveyPrinter = new SurveyPrinter();
 $surveyFileStorage = new SurveyFileStorage();
 
 $survey = $requestSurveyLoader->createSurveyInfo();
-
 echo 'Входящие параметры<br><br>';
-$surveyPrinter->viewData($survey);
-echo '<br><br>';
+SurveyPrinter::viewData($survey);
+echo '<br>';
 
-$surveyFileStorage->saveSurveyToFile($survey);
+SurveyFileStorage::saveSurveyToFile($survey);
 
 echo 'Пользователь, взятый из файла<br><br>';
-$surveyFile = $surveyFileStorage->loadSurveyFromFile($survey->getEmail());
-$surveyPrinter->viewData($surveyFile);
+$surveyFile = $surveyFileStorage->loadSurveyFromFile($survey);
+SurveyPrinter::viewData($surveyFile);

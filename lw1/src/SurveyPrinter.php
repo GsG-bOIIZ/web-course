@@ -2,12 +2,17 @@
 
 class SurveyPrinter
 {
-    public function viewData(Survey $survey): void
+    public static function viewData(Survey $survey): void
     {
+        if (!$survey->getEmail())
+        {
+            echo"<br>Unable to output data<br>";
+            return;
+        }
         echo
             'Email: ' . $survey->getEmail() . "<br>" .
             'First Name: ' . $survey->getFirstName() . "<br>" .
             'Last Name: ' . $survey->getLastName() . "<br>" .
-            'Age: ' . $survey->getAge();
+            'Age: ' . $survey->getAge() . "<br>";
     }
 }
